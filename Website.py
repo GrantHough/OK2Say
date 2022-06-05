@@ -46,8 +46,6 @@ probs = model.predict(tokenizedTextInput)
 selection = st_btn_select(('HOME', 'ABOUT', 'HOW IT\'S MADE'))
 
 userTextInput = ""
-outputList = []
-
 
 if selection == 'HOME':
 
@@ -58,12 +56,19 @@ if selection == 'HOME':
     userTextInput = st.text_area("Provide the text you would like scanned:", userTextInput)
     sentences = nltk.sent_tokenize(userTextInput)
 
+    outputList = [2][len(sentences)]
+
+    counter = 0
+
     for sentence in sentences: 
-        number = (model.predict(prepareData(sentence, tokenizer))[0][1] * 100)
-        outputList.append('"' + sentence + '"' + ' has a ' + str(round(number, 2)) + "% chance of being controversial")
+        counter = counter + 1
+        number = round(model.predict(prepareData(sentence, tokenizer))[0][1] * 100, 2)
+        outputList[0][counter - 1].append('"' + sentence + '"')
+        outputList[1][counter - 1].append(number)
 
-
-    df = pd.DataFrame(data = outputList)
+    df = pd.DataFrame()
+    df["Sentence"], df["Chance of being Controversial"] = outputList.T
+    
    
     if(len(sentences) > 0):
 
