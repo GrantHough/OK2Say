@@ -43,17 +43,20 @@ probs = model.predict(tokenizedTextInput)
 # print(probs[0][0])
 # print(probs[0][1])
 
-selection = st_btn_select(('HOME', 'ABOUT', 'HOW IT\'S MADE'))
+selection = st_btn_select(('SCANNER', 'ABOUT', 'HOW IT\'S MADE'))
 
 userTextInput = ""
 
-if selection == 'HOME':
+if selection == 'SCANNER':
 
     st.title('OK2Say')
-    st.subheader('Flagging potentially controversial phrases with NLP')
+    st.subheader('Flagging potentially controversial sentences with NLP')
     st.text('Created by Grant Hough')
     
-    userTextInput = st.text_area("Provide the text you would like scanned:", userTextInput)
+    st.subheader('Select your controversy threshold percentage')
+    tolerance = st.slider(label = "For example, a value of 73 means that anything with a controversy percentage above 73% will be flagged and shown.\nEverything else will not be shown.", min_value = 0, max_value = 100, value =  50)
+
+    userTextInput = st.text_area("Provide the text you would like to be scanned:", userTextInput)
     sentences = nltk.sent_tokenize(userTextInput)
 
     sentenceOutputList = []
@@ -61,14 +64,12 @@ if selection == 'HOME':
 
     for sentence in sentences: 
         number = round(model.predict(prepareData(sentence, tokenizer))[0][1] * 100, 2)
-        sentenceOutputList.append('"' + sentence + '"')
-        valueOutputList.append(str(number) + "%")
+        if (number > tolerance): 
+            sentenceOutputList.append('"' + sentence + '"')
+            valueOutputList.append(str(number) + "%")
 
     d = {'Sentence': sentenceOutputList, 'Chance to be Controversial': valueOutputList}
     df = pd.DataFrame(d)
-
-    st.subheader('Select your tolerance for controversy(%)')
-    st.slider(0, 100)
    
     if(len(sentences) > 0):
         st.subheader('Potentially Controversial Sentences')
@@ -82,8 +83,11 @@ if selection == 'ABOUT':
     st.text('As society continues to fight for social justice, what people can and can\'t say is \neverchanging. Some phrases that used to be considered "normal" just a few years ago\nare now off-limits, for better or worse. One unintentional slip-up can result in a \nlost job, a ruined relationship, or a slew of hateful comments.')
     st.subheader('People Don\'t Know What\'s OK to Say')
     st.image('rightwrong.webp')
-    st.text('Because of the constantly changing standards of speech, many are left unsure of what\n is OK to say. OK2Say hopes to remedy this by using machine-learning to scan \nuser-inputted text for potentially controversial phrases.')
-    
+    st.text('Because of the constantly changing standards of speech, many are left unsure of what\nis OK to say. OK2Say hopes to remedy this by using machine-learning models to scan \nuser-inputted text for potentially controversial phrases and help people get their real message across to everyone.')
+
 if selection == 'HOW IT\'S MADE':
 
     st.title('OK2Say')
+    st.subheader('Technologies Used')
+    st.image('socialmedia.jpeg')
+    st.text('The website for OK2Say was built with Streamlit, a framework used to create web apps\nin Python. The model for determining the controversy of sentences was created with \nTensorFlow and Keras and was trained on a dataset of toxic Tweets.')
