@@ -60,7 +60,7 @@ if selection == 'HOME':
 
     for sentence in sentences: 
         number = (model.predict(prepareData(sentence, tokenizer))[0][1] * 100)
-        outputList.append('"' + sentence + '"' + ' has a ' + str(number) + "% chance of being controversial")
+        outputList.append('"' + sentence + '"' + ' has a ' + str(round(number, 2)) + "% chance of being controversial")
 
 
     df = pd.DataFrame(data = outputList)
