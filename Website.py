@@ -90,3 +90,4 @@ if selection == 'HOW IT\'S MADE':
     st.subheader('Technologies Used')
     st.image('REALTFKERAS.png')
     st.text('The website for OK2Say was built with Streamlit, a framework used to create web apps\nin Python. The model for determining the controversy of sentences was created with \nTensorFlow and Keras and was trained on a dataset of toxic Tweets.')
+
