@@ -66,9 +66,12 @@ if selection == 'HOME':
 
     d = {'Sentence': sentenceOutputList, 'Chance to be Controversial': valueOutputList}
     df = pd.DataFrame(d)
+
+    st.subheader('Select your tolerance for controversy(%)')
+    st.slider(0, 100)
    
     if(len(sentences) > 0):
-
+        st.subheader('Potentially Controversial Sentences')
         st.table(df)
 
 if selection == 'ABOUT':
