@@ -1,3 +1,4 @@
+from tkinter import TRUE
 import tensorflow as tf
 from keras.models import load_model
 import keras
@@ -48,7 +49,7 @@ userTextInput = ""
 if selection == 'SCANNER':
 
     st.title('OK2Say')
-    st.subheader('Flagging potentially controversial sentences with NLP')
+    st.subheader('Evaluating sentences for controversy with NLP')
     st.text('Created by Grant Hough')
     
     st.subheader('Select your controversy threshold percentage')
@@ -78,7 +79,7 @@ if selection == 'ABOUT':
     st.title('OK2Say')
     st.subheader('Times are Changing')
     st.image('socialmedia.jpeg')
-    st.text('As society continues to fight for social justice, what people can and can\'t say is \neverchanging. Some phrases that used to be considered "normal" just a few years ago\nare now off-limits, for better or worse. One unintentional slip-up can result in a \nlost job, a ruined relationship, or a slew of hateful comments.')
+    st.text('As society continues to fight for social justice, what people can and can\'t say is \never changing. Some phrases that used to be considered "normal" just a few years ago\nare now off-limits, for better or worse. One unintentional slip-up can result in a \nlost job, a ruined relationship, or a slew of hateful comments.')
     st.subheader('People Don\'t Know What\'s OK to Say')
     st.image('graphic.png')
     st.text('Because of the constantly changing standards of speech, many are left unsure of what\nis OK to say. OK2Say hopes to remedy this by using machine-learning models to scan \nuser-inputted text for potentially controversial phrases and help people get their\nreal message across to everyone.')
