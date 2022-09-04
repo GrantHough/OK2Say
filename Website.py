@@ -9,8 +9,20 @@ from transformers import BertTokenizer
 from transformers import TFBertModel
 import streamlit as st
 from st_btn_select import st_btn_select
+import openai
+import os
 import nltk
+import keys
 nltk.download('punkt')
+
+openai.api_key = keys.openaikey
+text = "Provide 2 versions of this sentence that are less controversial: 'I wanna kill your grandma.'"
+response = openai.Completion.create (
+    engine = "text-davinci-002",
+    prompt = text,
+    temperature = 0.4,
+    max_tokens = 200
+)   
 
 model = tf.keras.models.load_model('model.h5')
 inputText = 'very cool'
@@ -48,6 +60,7 @@ userTextInput = ""
 
 if selection == 'SCANNER':
 
+    st.text(response)
     st.title('OK2Say')
     st.subheader('Evaluating sentences for controversy with NLP')
     st.text('Created by Grant Hough')
